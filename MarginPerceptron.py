@@ -6,7 +6,6 @@ def read_file(file_name):
         first = next(f).strip('\n').split(',')
         lines = f.readlines()
     f.close()
-    lines = np.array(lines)
     for i in range(0, len(lines)):
         lines[i] = lines[i].strip('\n')
 
@@ -18,8 +17,8 @@ if __name__ == "__main__":
     for file in files:
         first_line, data = read_file(file)
         print(first_line)
-        n = int(first_line[0])  # points_number
-        d = int(first_line[1])  # dimensionality
+        d = int(first_line[0])  # dimensionality
+        n = int(first_line[1])  # points_number
         r = int(first_line[2])  # radius
         r_guess = r
         print(data)
