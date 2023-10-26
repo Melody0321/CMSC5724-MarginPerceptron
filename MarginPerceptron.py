@@ -63,6 +63,12 @@ def iteration(w_original):
 
     return w_original
 
+def Training(data, w, t, d, r):
+    r_guess=r;
+    for n in range(t):
+        w=iteration(w)
+    return true
+
 def calculate_margin(weight, n, R):
     # margin is the smallest distance from the points of S to the plane
     margin = R
@@ -83,4 +89,8 @@ if __name__ == "__main__":
         n = int(first_line[1])  # points_number
         r = int(first_line[2])  # radius
         r_guess = r
+        w = [0] * d
+        t=math.ceil(12 * (r ** 2) / (r_guess ** 2))
+        while Training(data, w, t, d, r):
+            r_guess=r_guess/2
         print(data)
