@@ -41,8 +41,8 @@ if __name__ == "__main__":
     for file in files:
         first_line, data = read_file(file)
         print(first_line)
-        d = int(first_line[1])  # dimensionality
-        n = int(first_line[0])  # points_number
+        d = int(first_line[0])  # dimensionality
+        n = int(first_line[1])  # points_number
         r = int(first_line[2])  # radius
         r_guess = r
         print(data)
