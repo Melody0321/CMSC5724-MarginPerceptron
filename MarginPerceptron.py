@@ -44,38 +44,37 @@ def norm(w):
 
 
 def iteration(w_original, r_guess):
-    flag = 1
     w = w_original
     for i in range(n):
+        print(data[i])
         point_data = data[i].split(',')[0:d]
         point_data = list(map(float, point_data))
         label = int(data[i].split(',')[-1])
         multiply_result = dot_product(w, point_data)
         if norm(w) != 0:
-            distance = multiply_result * label / norm(w)
+            distance = abs(multiply_result)/ norm(w)
         else:
             distance = 0
 
-        if distance < r_guess / 2 or multiply_result * label < 0:
+        if distance < r_guess / 2 or multiply_result * label <= 0:
             if label == 1:
                 add(w, point_data)
             else:
                 subtract(w, point_data)
-            return w, flag
-        else:
-            flag = 0
+            return w, 1
 
-    return w_original, flag
+    return w_original, 0
 
 
-def Training(w, t, r):
-    for n in range(t):
+def training(w, r_guess):
+    t = math.ceil(12 * (r ** 2) / (r_guess ** 2))
+    print(t)
+    for i in range(t):
         w, flag = iteration(w, r)
-        if flag == 1:
-            return True
-        else:
+        print(w,flag)
+        if flag == 0:
             return False
-    return False
+    return True
 
 
 def calculate_margin(weight, n, R):
@@ -94,17 +93,17 @@ if __name__ == "__main__":
     files = ['2d-r16-n10000', '4d-r24-n10000', '8d-r12-n10000']
     for file in files:
         first_line, data = read_file(file)
-        print(first_line)
+        print("Dataset:", file)
         d = int(first_line[0])  # dimensionality
         n = int(first_line[1])  # points_number
         r = int(first_line[2])  # radius
         r_guess = r
         w = [0] * d
         t = math.ceil(12 * (r ** 2) / (r_guess ** 2))
-        while Training(w, t, r_guess):
+        while training(w, r_guess):
             r_guess = r_guess / 2
-
-        print(w)
-        print(r_guess)
-        margin = calculate_margin(w, n, r_guess)
-        print(margin)
+        #
+        # print(w)
+        # print(r_guess)
+        # margin = calculate_margin(w, n, r_guess)
+        # print(margin)
