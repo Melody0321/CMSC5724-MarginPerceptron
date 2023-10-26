@@ -1,5 +1,6 @@
 import math
 
+
 def read_file(file_name):
     with open(file_name, 'r') as f:
         first = next(f).strip('\n').split(',')
@@ -33,6 +34,7 @@ def subtract(v1, v2):
 
     return result
 
+
 def norm(w):
     w_norm = 0
     for i in range(len(w)):
@@ -41,8 +43,8 @@ def norm(w):
     return w_norm
 
 
-def iteration(w_original):
-    flag=1
+def iteration(w_original, r_guess):
+    flag = 1
     w = w_original
     for i in range(n):
         point_data = data[i].split(',')[0:d]
@@ -54,28 +56,27 @@ def iteration(w_original):
         else:
             distance = 0
 
-        print(distance)
         if distance < r_guess / 2 or multiply_result * label < 0:
             if label == 1:
                 add(w, point_data)
             else:
                 subtract(w, point_data)
-            return w
+            return w, flag
         else:
-            flag=0
+            flag = 0
 
-    return w_original,flag
+    return w_original, flag
 
-def Training(data, w, t, d, r):
-    r_guess=r;
+
+def Training(w, t, r):
     for n in range(t):
-        w,flag=iteration(w)
-        if flag==1:
+        w, flag = iteration(w, r)
+        if flag == 1:
             return True
         else:
             return False
     return False
-    
+
 
 def calculate_margin(weight, n, R):
     # margin is the smallest distance from the points of S to the plane
@@ -83,10 +84,11 @@ def calculate_margin(weight, n, R):
     for points in range(n):
         point_data = data[points].split(',')[0:d]
         point_data = list(map(float, point_data))
-        distance = abs(dot_product(weight, point_data))/norm(weight)
+        distance = abs(dot_product(weight, point_data)) / norm(weight)
         if distance < margin:
             margin = distance
     return margin
+
 
 if __name__ == "__main__":
     files = ['2d-r16-n10000', '4d-r24-n10000', '8d-r12-n10000']
@@ -98,7 +100,11 @@ if __name__ == "__main__":
         r = int(first_line[2])  # radius
         r_guess = r
         w = [0] * d
-        t=math.ceil(12 * (r ** 2) / (r_guess ** 2))
-        while Training(data, w, t, d, r):
-            r_guess=r_guess/2
-        print(data)
+        t = math.ceil(12 * (r ** 2) / (r_guess ** 2))
+        while Training(w, t, r_guess):
+            r_guess = r_guess / 2
+
+        print(w)
+        print(r_guess)
+        margin = calculate_margin(w, n, r_guess)
+        print(margin)
