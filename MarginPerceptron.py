@@ -67,7 +67,9 @@ def calculate_margin(weight, n, R):
     # margin is the smallest distance from the points of S to the plane
     margin = R
     for points in range(n):
-        distance = abs(dot_product(weight, data[points]))/norm(weight)
+        point_data = data[points].split(',')[0:d]
+        point_data = list(map(float, point_data))
+        distance = abs(dot_product(weight, point_data))/norm(weight)
         if distance < margin:
             margin = distance
     return margin
