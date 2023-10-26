@@ -18,6 +18,21 @@ def dot_product(v1, v2):
     return result
 
 
+def add(v1, v2):
+    result = v1
+    for i in range(len(v1)):
+        result += v2[i]
+
+    return result
+
+
+def subtract(v1, v2):
+    result = v1
+    for i in range(len(v1)):
+        result -= v2[i]
+
+    return result
+
 def norm(w):
     w_norm = 0
     for i in range(len(w)):
@@ -25,6 +40,28 @@ def norm(w):
     w_norm = math.sqrt(w_norm)
     return w_norm
 
+
+def iteration(w_original):
+    w = w_original
+    for i in range(n):
+        point_data = data[i].split(',')[0:d]
+        point_data = list(map(float, point_data))
+        label = int(data[i].split(',')[-1])
+        multiply_result = dot_product(w, point_data)
+        if norm(w) != 0:
+            distance = multiply_result * label / norm(w)
+        else:
+            distance = 0
+
+        print(distance)
+        if distance < r_guess / 2 or multiply_result * label < 0:
+            if label == 1:
+                add(w, point_data)
+            else:
+                subtract(w, point_data)
+            return w
+
+    return w_original
 
 def calculate_margin(weight, n, R):
     # margin is the smallest distance from the points of S to the plane
