@@ -42,6 +42,7 @@ def norm(w):
 
 
 def iteration(w_original):
+    flag=1
     w = w_original
     for i in range(n):
         point_data = data[i].split(',')[0:d]
@@ -60,14 +61,21 @@ def iteration(w_original):
             else:
                 subtract(w, point_data)
             return w
+        else:
+            flag=0
 
-    return w_original
+    return w_original,flag
 
 def Training(data, w, t, d, r):
     r_guess=r;
     for n in range(t):
-        w=iteration(w)
-    return true
+        w,flag=iteration(w)
+        if flag==1:
+            return True
+        else:
+            return False
+    return False
+    
 
 def calculate_margin(weight, n, R):
     # margin is the smallest distance from the points of S to the plane
