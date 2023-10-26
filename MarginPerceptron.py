@@ -21,7 +21,7 @@ def dot_product(v1, v2):
 def add(v1, v2):
     result = v1
     for i in range(len(v1)):
-        result += v2[i]
+        result[i] += v2[i]
 
     return result
 
@@ -29,7 +29,7 @@ def add(v1, v2):
 def subtract(v1, v2):
     result = v1
     for i in range(len(v1)):
-        result -= v2[i]
+        result[i] -= v2[i]
 
     return result
 
