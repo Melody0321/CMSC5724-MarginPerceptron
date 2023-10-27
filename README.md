@@ -7,3 +7,4 @@ The datasets are stored as *.txt* form: '2d-r16-n10000.txt', '4d-r24-n10000.txt'
 * Environment: Python 3.6
 * Decompress the MarginPerceptron.zip, and load it as a project
 * Run main method in MarginPerceptron.py, it will automatically read and classify the three data sets
+* The weight, gamma_guess and margin will be printed as output
